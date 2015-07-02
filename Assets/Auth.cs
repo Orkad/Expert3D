@@ -12,16 +12,19 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 
 public class Auth:MonoBehaviour{
-	//REFERENCES
+
+	[Header("References")]
 	public MysqlLink link;
 	public InputField usernameField;
 	public InputField passwordField;
 	public Button connectButton;
 	public InformationWindow informationWindow;
 	
-	//VARIABLES
+	[Header("Variables")]
 	public bool connected;
 	public string connectedUser;
+
+	[Header("Events")]
 	public UnityEvent OnUserConnected;
 
 	void Awake(){

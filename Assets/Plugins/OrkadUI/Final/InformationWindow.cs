@@ -7,6 +7,7 @@ public class InformationWindow : MonoBehaviour {
 	//Prop
 	public FadeInOut fadeInOut{get{return GetComponent<FadeInOut>();}}
 	//Ref
+	[Header("References")]
 	public Text titleTextRef;
 	public Text informationTextRef;
 	public Button okButtonRef;
