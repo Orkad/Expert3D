@@ -12,10 +12,14 @@ using MySql.Data;
 using MySql.Data.MySqlClient;
 
 public class Auth:MonoBehaviour{
+	//REFERENCES
 	public MysqlLink link;
 	public InputField usernameField;
 	public InputField passwordField;
 	public Button connectButton;
+	public InformationWindow informationWindow;
+	
+	//VARIABLES
 	public bool connected;
 	public string connectedUser;
 	public UnityEvent OnUserConnected;
@@ -34,10 +38,11 @@ public class Auth:MonoBehaviour{
 			connected = true;
 			connectedUser = username;
 			Debug.Log("Connecté en tant que " + username);
+			informationWindow.Show("Connexion Réussie","Connecté en tant que " + username);
 			OnUserConnected.Invoke();
 		}
 		else
-			Debug.Log("Nom d'utilisateur ou mot de passe incorrect.");
+			informationWindow.Show("Erreur de connexion","Nom d'utilisateur ou mot de passe incorrect");
 		link.Close();
 	}
 

@@ -3,66 +3,55 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(CanvasGroup),typeof(RectTransform))]
-public class FadeInOut : MonoBehaviour {
-	protected RectTransform rectTransform{get{return GetComponent<RectTransform>();}}
+[RequireComponent(typeof(CanvasGroup))]
+public class FadeInOut : AnimUI {
 	protected CanvasGroup canvasGroup{get{return GetComponent<CanvasGroup>();}}
-	public bool show = false;
-	
-	public float transitionDuration = 0.2f;
+	private bool show = false;
 	public UnityEvent OnShow;
 	public UnityEvent OnHide;
-	
-	protected virtual void UpdateShow(){}
-	private void Update(){
+
+	void Start(){
+		if(startHidden)
+			canvasGroup.alpha = 0f;
+		else{
+			canvasGroup.alpha = 1f;
+			show = true;
+		}
+
+	}
+
+	void Update(){
 		if(show){
-			UpdateShow();
 			canvasGroup.alpha +=  Time.deltaTime / transitionDuration;
 		}
 		else
 			canvasGroup.alpha -=  Time.deltaTime / transitionDuration;
-		canvasGroup.blocksRaycasts = canvasGroup.interactable =  IsShown();
+		canvasGroup.blocksRaycasts = canvasGroup.interactable = Shown();
 		canvasGroup.alpha = Mathf.Clamp01(canvasGroup.alpha);
 	}
 	
-	public void StartHidden(){
-		canvasGroup.alpha = 0f;
-		show = false;
-	}
-	
-	public void StartShown(){
-		canvasGroup.alpha = 1f;
-		show = true;
-	}
-	
-	public void Show(){
-		BeforeShow();
+	public override void Show(){
 		show = true;
 		OnShow.Invoke();
 	}
 	
-	protected virtual void BeforeShow(){}
-	
-	public void Hide(){
-		BeforeHide();
+	public override void Hide(){
 		show = false;
 		OnHide.Invoke();
 	}
 	
-	protected virtual void BeforeHide(){}
-	
 	public void Toogle(){
-		if(IsShown())
+		if(Shown())
 			Hide();
 		else
 			Show();
 	}
 	
-	public bool IsHidden(){
-		return canvasGroup.alpha <= 0f;
+	public bool Hidden(){
+		return canvasGroup.alpha == 0f;
 	}
 	
-	public bool IsShown(){
-		return canvasGroup.alpha >= 1f;
+	public bool Shown(){
+		return canvasGroup.alpha == 1f;
 	}
 }
