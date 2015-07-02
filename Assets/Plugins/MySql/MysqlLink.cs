@@ -1,6 +1,4 @@
-﻿
-
-//UNITYENGINE
+﻿//UNITYENGINE
 using UnityEngine;
 using UnityEngine.Events;
 //.NET 2.0
@@ -22,6 +20,7 @@ public class MysqlLink : MonoBehaviour {
 
 	void Awake(){
 		connection = new MySqlConnection("server=" + host + ";port=" + port.ToString() + ";user=" + user + ";password=" + password + ";database=" + dbname + ";");
+		TestConnection();
 	}
 
 	private void TestConnection(){
