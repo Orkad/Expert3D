@@ -28,7 +28,7 @@ public class Auth:MonoBehaviour{
 	public UnityEvent OnUserConnected;
 
 	void Awake(){
-		connectButton.onClick.AddListener(() => TryConnectUser());
+		connectButton.onClick.AddListener(TryConnectUser);
 	}
 
 	void TryConnectUser(){
