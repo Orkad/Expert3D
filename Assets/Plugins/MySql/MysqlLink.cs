@@ -17,24 +17,9 @@ public class MysqlLink : MonoBehaviour {
 	public string password = "";
 	public string dbname = "Unity";
 	public MySqlConnection connection;
+	public UnityEvent Success;
 
 	void Awake(){
 		connection = new MySqlConnection("server=" + host + ";port=" + port.ToString() + ";user=" + user + ";password=" + password + ";database=" + dbname + ";");
-		TestConnection();
-	}
-
-	private void TestConnection(){
-		Open();
-		Close();
-	}
-
-	public void Open(){
-		try{connection.Open();}
-		catch(MySqlException ex){Debug.LogError("Mysql Error : " + ex.Message);}
-	}
-
-	public void Close(){
-		try{connection.Close();}
-		catch(MySqlException ex){Debug.LogError("Mysql Error : " + ex.Message);}
 	}
 }

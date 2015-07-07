@@ -28,25 +28,25 @@ public class Auth:MonoBehaviour{
 	public UnityEvent OnUserConnected;
 
 	void Awake(){
-		connectButton.onClick.AddListener(() => TryConnectUser(usernameField.text,passwordField.text));
+		connectButton.onClick.AddListener(() => TryConnectUser());
 	}
 
-	private void TryConnectUser(string username,string password){
-		link.Open();
+	void TryConnectUser(){
+		link.connection.Open();
 		MySqlCommand cmd = new MySqlCommand("SELECT * FROM user WHERE username=@username AND password=PASSWORD(@password)",link.connection);
-		cmd.Parameters.AddWithValue("@username",username);
-		cmd.Parameters.AddWithValue("@password",password);
+		cmd.Parameters.AddWithValue("@username",usernameField.text);
+		cmd.Parameters.AddWithValue("@password",passwordField.text);
 		MySqlDataReader rdr = cmd.ExecuteReader();
 		if(rdr.HasRows){
 			connected = true;
-			connectedUser = username;
-			Debug.Log("Connecté en tant que " + username);
-			informationWindow.Show("Connexion Réussie","Connecté en tant que " + username);
+			connectedUser = usernameField.text;
+			Debug.Log("Connecté en tant que " + usernameField.text);
+			informationWindow.Show("Connexion Réussie","Connecté en tant que " + usernameField.text);
 			OnUserConnected.Invoke();
 		}
 		else
 			informationWindow.Show("Erreur de connexion","Nom d'utilisateur ou mot de passe incorrect");
-		link.Close();
+		link.connection.Close();
 	}
 
 	public void DisconnectUser(){
